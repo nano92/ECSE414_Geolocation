@@ -45,8 +45,21 @@ def TraceRoute(ipAddress):
             hops, RTT = __ParseResponse(responseList)
             
             IPaddrFromKnownLoc = socket.gethostbyname(socket.gethostname())
-            print("From:" + IPaddrFromKnownLoc + " to:" + ipAddress + " Hops:" + str(hops) + " RTT:" + str(RTT) + "ms")
+            c = 300000000
+            # c = (2*distance)/RTT
+            # distance = (c * RTT)/2
+            distance = (c*RTT)/2000000
+            
+            print("From:" + IPaddrFromKnownLoc + " to:" + ipAddress + " Hops:" + str(hops) + " RTT:" + str(RTT) + "ms" + " Distance:" + str(distance) + " radius in km")
+            return "From:" + IPaddrFromKnownLoc + " to:" + ipAddress + " Hops:" + str(hops) + " RTT:" + str(RTT) + "ms" + " Distance:" + str(distance) + " radius in km"
                           
+def readFile(myFile):
+    read_data = ""
+    with open(myFile) as f:
+        read_data = f.read().splitlines()
+    #print(read_data)
+    return read_data
+
 def __ParseResponse(routeList):
     RTTListPerHops = []
     hops = len(routeList) 
@@ -80,4 +93,10 @@ if __name__ == '__main__':
         if index == 0:
             continue
         else:
-            TraceRoute(IPs)    
+            my_data = []
+            theIPs = readFile(IPs)
+            for x in theIPs:
+                my_data.append(TraceRoute(x))
+            f = open('Results.txt','w')
+            for x in my_data:
+                f.write(x+"\n")    
