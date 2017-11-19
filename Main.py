@@ -45,9 +45,10 @@ def TraceRoute(ipAddress):
             hops, RTT = __ParseResponse(responseList)
             
             IPaddrFromKnownLoc = socket.gethostbyname(socket.gethostname())
-            c = 300000000
+            c = 300000000 #speed of light in m/s
+            # RTT: ms --> divide by 1000 to get seconds
             # c = (2*distance)/RTT
-            # distance = (c * RTT)/2
+            # distance = (c * RTT)/2 --> divide by 1000 again so that distance is in km
             distance = (c*RTT)/2000000
             
             print("From:" + IPaddrFromKnownLoc + " to:" + ipAddress + " Hops:" + str(hops) + " RTT:" + str(RTT) + "ms" + " Distance:" + str(distance) + " radius in km")
