@@ -35,6 +35,8 @@ wheels/
 pip-log.txt
 pip-delete-this-directory.txt
 
+#Files to ignore
+Results.txt
 # Unit test / coverage reports
 htmlcov/
 .tox/
